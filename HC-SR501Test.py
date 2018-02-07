@@ -9,7 +9,7 @@ def init():
     pass  
 def beep():  
         for i in range(1,6):  
-            GPIO.output(11, GPIO.LOW) #蜂鸣器低电平响  
+            GPIO.output(11, GPIO.LOW) 
             time.sleep(0.5)  
             GPIO.output(11, GPIO.HIGH)  
             time.sleep(0.5)  
@@ -23,7 +23,7 @@ def detct():
         else:  
             GPIO.output(11, GPIO.HIGH)  
             print time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))+"  Noanybody!"  
-        time.sleep(6) #每6秒检查一次  
+        time.sleep(6) 
 time.sleep(2)  
 init()  
 detct()  
