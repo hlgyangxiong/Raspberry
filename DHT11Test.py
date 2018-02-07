@@ -3,7 +3,7 @@ import time
   
 channel =4   
 data = []  
-j = 0  
+j = 0   
 
 GPIO.setmode(GPIO.BCM)  
   
@@ -75,5 +75,4 @@ def main():
         time.sleep(1000)
         
 if __name__ == '__main__':
-    try:
-        main()
+    main()
