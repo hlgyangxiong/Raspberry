@@ -1,11 +1,11 @@
 import RPi.GPIO as GPIO  
 import time  
-    
-data = []  
 
+  
+  
 def GetData():
     channel =4   
-      
+    data = []     
     j = 0 
 
     GPIO.setmode(GPIO.BCM)
@@ -40,8 +40,7 @@ def GetData():
   
     print "sensor is working."  
     print data  
-    
-def CheckData():  
+     
     humidity_bit = data[0:8]  
     humidity_point_bit = data[8:16]  
     temperature_bit = data[16:24]  
@@ -73,7 +72,6 @@ def CheckData():
     
 while True:
     GetData()
-    CheckData()
     time.sleep(1)
        
 
