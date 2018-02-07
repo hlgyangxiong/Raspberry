@@ -72,6 +72,6 @@ def CheckData():
 while True:
     GetData()
     CheckData()
-    time.sleep(1000)
+    time.sleep(1)
        
 
