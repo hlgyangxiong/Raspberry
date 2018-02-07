@@ -1,11 +1,10 @@
 import RPi.GPIO as GPIO  
 import time  
   
-#定义IO口
 channel =4   
 data = []  
 j = 0  
-#设置IO编码模式  
+
 GPIO.setmode(GPIO.BCM)  
   
 def GetData():
