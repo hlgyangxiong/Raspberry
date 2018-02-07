@@ -1,13 +1,14 @@
 import RPi.GPIO as GPIO  
 import time  
-  
-channel =4   
-data = []    
-
-GPIO.setmode(GPIO.BCM)  
+    
   
 def GetData():
+    channel =4   
+    data = []    
     j = 0 
+
+    GPIO.setmode(GPIO.BCM)
+    
     time.sleep(1)  
   
     GPIO.setup(channel, GPIO.OUT)  
