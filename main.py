@@ -95,6 +95,8 @@ def LED(argument):
         5: Y2_LED,
         6: R2_LED,
     }
+    func = switcher.get(argument)
+    return func()
 
     
 def beep():  
