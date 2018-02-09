@@ -119,7 +119,7 @@ def detct():
     time.sleep(4) 
         
 init()  
-LED(1)
+LED(5)
 
              
 while True:
