@@ -3,6 +3,7 @@ import time
 import Adafruit_DHT
 import RPi.GPIO as GPIO     
     
+DataForQT = []
 def init():  
     GPIO.setwarnings(False)  
     GPIO.setmode(GPIO.BOARD) 
@@ -49,6 +50,8 @@ def GetTH():
     humidity, temperature = Adafruit_DHT.read_retry(sensor, DHT11pin)
     if humidity is not None and temperature is not None:
         print('Temp={0:0.1f}*  Humidity={1:0.1f}%'.format(temperature, humidity))
+        DataForQT.append(temperature)  
+        DataForQT.append(humidity)
     else:
         print('Failed to get reading. Try again!')
         sys.exit(1)
@@ -131,21 +134,26 @@ def detct():
     if GPIO.input(12) == True:  
         print time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))+"  Someone is closing!"  
         LED(5)
+        DataForQT.append(1)
         if GPIO.input(32) == False:
             print time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))+"  Something is slanting!"
             LED(7)
+            DataForQT.append(1)
             beep()  
         else:
             pass
     else:  
         GPIO.output(11, GPIO.HIGH)  
         print time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))+"  Noanybody!"  
+        DataForQT.append(0)
         if GPIO.input(32) == False:
             print time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))+"  Something is slanting!"
             LED(6)
+            DataForQT.append(1)
             beep()  
         else:
             LED(4)
+            DataForQT.append(0)
     time.sleep(2) 
         
 init()  
@@ -153,7 +161,11 @@ LED(1)
 LED(4)
              
 while True:
-
+    
+    DataForQT = []
+    
     GetTH()
     detct()
+    
+    print data
     
