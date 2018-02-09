@@ -141,7 +141,8 @@ def detct():
             DataForQT.append(1)
             beep()  
         else:
-            pass
+            DataForQT.append(0)
+            
     else:  
         GPIO.output(11, GPIO.HIGH)  
         print time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))+"  Noanybody!"  
