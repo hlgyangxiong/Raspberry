@@ -23,10 +23,57 @@ def GetTH():
     
 def init():  
     GPIO.setwarnings(False)  
-    GPIO.setmode(GPIO.BOARD)  
+    GPIO.setmode(GPIO.BOARD) 
+    
     GPIO.setup(12, GPIO.IN)  
-    GPIO.setup(11,GPIO.OUT)  
+    GPIO.setup(11,GPIO.OUT)
+    
+    GPIO.setup(33,GPIO.OUT) 
+    GPIO.setup(35,GPIO.OUT)
+    GPIO.setup(37,GPIO.OUT)
+    
+    GPIO.setup(36,GPIO.OUT)
+    GPIO.setup(38,GPIO.OUT)
+    GPIO.setup(40,GPIO.OUT)
+    
+    GPIO.setup(31,GPIO.OUT)
+    GPIO.setup(32, GPIO.IN)
     pass  
+  
+
+#LED  
+def G1_LED():
+    GPIO.output(33, GPIO.HIGH)
+    GPIO.output(35, GPIO.LOW) 
+    GPIO.output(37, GPIO.LOW)
+    
+def Y1_LED():
+    GPIO.output(33, GPIO.LOW)
+    GPIO.output(35, GPIO.HIGH) 
+    GPIO.output(37, GPIO.LOW)
+    
+def R1_LED():
+    GPIO.output(33, GPIO.LOW)
+    GPIO.output(35, GPIO.LOW) 
+    GPIO.output(37, GPIO.HIGH)
+  
+
+def G2_LED():
+    GPIO.output(36, GPIO.HIGH)
+    GPIO.output(38, GPIO.LOW) 
+    GPIO.output(40, GPIO.LOW)
+    
+def Y2_LED():
+    GPIO.output(36, GPIO.LOW)
+    GPIO.output(38, GPIO.HIGH) 
+    GPIO.output(40, GPIO.LOW)
+    
+def R2_LED():
+    GPIO.output(36, GPIO.LOW)
+    GPIO.output(38, GPIO.LOW) 
+    GPIO.output(40, GPIO.HIGH)
+
+
     
 def beep():  
         for i in range(1,6):  
@@ -44,10 +91,10 @@ def detct():
     else:  
         GPIO.output(11, GPIO.HIGH)  
         print time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))+"  Noanybody!"  
-    time.sleep(6) 
+    time.sleep(4) 
         
 init()         
-        
+G1_LED()        
 while True:
     GetTH()
 #    time.sleep(2)
