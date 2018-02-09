@@ -167,5 +167,5 @@ while True:
     GetTH()
     detct()
     
-    print data
+    print DataForQT
     
