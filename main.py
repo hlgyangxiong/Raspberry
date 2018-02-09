@@ -41,6 +41,8 @@ def init():
     GPIO.setup(31,GPIO.OUT)
     GPIO.setup(32, GPIO.IN)
     
+    
+    
     GPIO.output(33, GPIO.LOW)
     GPIO.output(35, GPIO.LOW) 
     GPIO.output(37, GPIO.LOW)
@@ -48,7 +50,7 @@ def init():
     GPIO.output(38, GPIO.LOW) 
     GPIO.output(40, GPIO.LOW)
     
-    GPIO.output(31, GPIO.HIGH)
+    GPIO.output(31, GPIO.LOW)
     
     pass  
   
