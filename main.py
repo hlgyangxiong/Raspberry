@@ -133,7 +133,7 @@ def detct():
             LED(6)
             beep()  
         else:
-            pass
+            LED(4)
     time.sleep(4) 
         
 init()  
