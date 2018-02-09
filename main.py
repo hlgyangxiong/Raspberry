@@ -84,6 +84,11 @@ def R2_LED():
     GPIO.output(36, GPIO.LOW)
     GPIO.output(38, GPIO.LOW) 
     GPIO.output(40, GPIO.HIGH)
+    
+def Y2R2_LED():
+    GPIO.output(36, GPIO.LOW)
+    GPIO.output(38, GPIO.HIGH) 
+    GPIO.output(40, GPIO.HIGH)
 
 def LED(argument):
     switcher = {
@@ -94,6 +99,7 @@ def LED(argument):
         4: G2_LED,
         5: Y2_LED,
         6: R2_LED,
+        7: Y2R2_LED,
     }
     func = switcher.get(argument)
     return func()
@@ -107,22 +113,35 @@ def beep():
             time.sleep(0.5)  
             print "the Buzzer will make sound"  
 
-#HC-SR501            
+#HC-SR501 + Slant           
 def detct():  
     #for i in range(1, 31):  
     if GPIO.input(12) == True:  
         print time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))+"  Someone is closing!"  
-        beep()  
+        LED(5)
+        if GPIO.input(32) == True:
+            print time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))+"  Something is slanting!"
+            LED(7)
+            beep()  
+        else:
+            pass
     else:  
         GPIO.output(11, GPIO.HIGH)  
         print time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))+"  Noanybody!"  
+        if GPIO.input(32) == True:
+            print time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))+"  Something is slanting!"
+            LED(6)
+            beep()  
+        else:
+            pass
     time.sleep(4) 
         
 init()  
-LED(5)
-
+LED(1)
+LED(4)
              
 while True:
+
     GetTH()
-#    time.sleep(2)
     detct()
+    
