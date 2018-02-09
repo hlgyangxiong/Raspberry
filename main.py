@@ -10,6 +10,8 @@ sensor_args = { '11': Adafruit_DHT.DHT11,
 sensor = sensor_args['11']
 DHT11pin = 4
 
+
+#Temperature  Humidity
 def GetTH():
     time.sleep(1)
     humidity, temperature = Adafruit_DHT.read_retry(sensor, DHT11pin)
@@ -41,15 +43,7 @@ def init():
     pass  
   
 
-#LED  
-def LEDTest():
-    GPIO.output(33, GPIO.HIGH)
-    GPIO.output(35, GPIO.HIGH) 
-    GPIO.output(37, GPIO.HIGH)
-    GPIO.output(36, GPIO.HIGH)
-    GPIO.output(38, GPIO.HIGH) 
-    GPIO.output(40, GPIO.HIGH)
-    
+#LED      
 def G1_LED():
     GPIO.output(33, GPIO.HIGH)
     GPIO.output(35, GPIO.LOW) 
@@ -81,6 +75,16 @@ def R2_LED():
     GPIO.output(38, GPIO.LOW) 
     GPIO.output(40, GPIO.HIGH)
 
+def LED(argument):
+    switcher = {
+        1: G1_LED,
+        2: Y1_LED,
+        3: R1_LED,
+        
+        4: G2_LED,
+        5: Y2_LED,
+        6: R2_LED,
+    }
 
     
 def beep():  
@@ -90,7 +94,8 @@ def beep():
             GPIO.output(11, GPIO.HIGH)  
             time.sleep(0.5)  
             print "the Buzzer will make sound"  
- 
+
+#HC-SR501            
 def detct():  
     #for i in range(1, 31):  
     if GPIO.input(12) == True:  
@@ -101,8 +106,10 @@ def detct():
         print time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))+"  Noanybody!"  
     time.sleep(4) 
         
-init()         
-LEDTest()       
+init()  
+LED(1)
+
+             
 while True:
     GetTH()
 #    time.sleep(2)
