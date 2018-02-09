@@ -56,10 +56,10 @@ def GetTH():
     if temperature <= 25:
         LED(1)
         GPIO.output(31, GPIO.HIGH)
-    else if temperature <= 30:
+    elif temperature <= 30:
         LED(2)
         GPIO.output(31, GPIO.LOW)
-    else if temperature > 30:
+    elif temperature > 30:
         LED(3)
         GPIO.output(31, GPIO.LOW)
     time.sleep(1)
