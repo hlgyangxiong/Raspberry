@@ -1,6 +1,7 @@
 import sys
-
+import time  
 import Adafruit_DHT
+import RPi.GPIO as GPIO 
 
 # Parse command line parameters.
 sensor_args = { '11': Adafruit_DHT.DHT11,
