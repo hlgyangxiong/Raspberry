@@ -50,4 +50,5 @@ init()
         
 while True:
     GetTH()
+    time.sleep(2)
     detct()
