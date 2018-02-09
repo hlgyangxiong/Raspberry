@@ -119,7 +119,7 @@ def detct():
     if GPIO.input(12) == True:  
         print time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))+"  Someone is closing!"  
         LED(5)
-        if GPIO.input(32) == True:
+        if GPIO.input(32) == False:
             print time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))+"  Something is slanting!"
             LED(7)
             beep()  
@@ -128,7 +128,7 @@ def detct():
     else:  
         GPIO.output(11, GPIO.HIGH)  
         print time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))+"  Noanybody!"  
-        if GPIO.input(32) == True:
+        if GPIO.input(32) == False:
             print time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))+"  Something is slanting!"
             LED(6)
             beep()  
