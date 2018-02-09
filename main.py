@@ -42,6 +42,14 @@ def init():
   
 
 #LED  
+def LEDTest():
+    GPIO.output(33, GPIO.HIGH)
+    GPIO.output(35, GPIO.HIGH) 
+    GPIO.output(37, GPIO.HIGH)
+    GPIO.output(36, GPIO.HIGH)
+    GPIO.output(38, GPIO.HIGH) 
+    GPIO.output(40, GPIO.HIGH)
+    
 def G1_LED():
     GPIO.output(33, GPIO.HIGH)
     GPIO.output(35, GPIO.LOW) 
@@ -94,7 +102,7 @@ def detct():
     time.sleep(4) 
         
 init()         
-G1_LED()        
+LEDTest()       
 while True:
     GetTH()
 #    time.sleep(2)
