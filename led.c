@@ -9,7 +9,7 @@
 #define LEDY2	28
 #define LEDR2	29	
 
-int LED(int number);
+void LED(int number);
 
 void init(void)
 {
@@ -30,7 +30,7 @@ int main(void)
     init(); 
     
 }
-int LED(int number)
+void LED(int number)
 {
     switch(number)
     {
