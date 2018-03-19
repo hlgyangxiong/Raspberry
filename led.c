@@ -3,7 +3,8 @@
 
 // LED Pin - wiringPi pin 0 is BCM_GPIO 17.
 
-#define LED     0
+#define LED1     0
+#define LED2     23
 
 int main (void)
 {
@@ -11,13 +12,16 @@ int main (void)
 
   wiringPiSetup () ;
 
-  pinMode (LED, OUTPUT) ;
+  pinMode (LED1, OUTPUT) ;
+  pinMode (LED2, OUTPUT) ;
 
   for (;;)
   {
-    digitalWrite (LED, 1) ;     // On
+    digitalWrite (LED1, 1) ;     // On
+    digitalWrite (LED2, 1) ;
     delay (500) ;               // mS
-    digitalWrite (LED, 0) ;     // Off
+    digitalWrite (LED1, 0) ;     // Off
+    digitalWrite (LED2, 0) ;
     delay (500) ;
   }
   return 0 ;
