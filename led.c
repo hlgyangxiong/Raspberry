@@ -1,40 +1,24 @@
-#include <wiringPi.h> 
+#include <stdio.h>
+#include <wiringPi.h>
 
-#define LEDG1	23
-#define LEDY1	0
-#define LEDR1	25	
+// LED Pin - wiringPi pin 0 is BCM_GPIO 17.
 
-#define LEDG2	27
-#define LEDY2	28
-#define LEDR2	29	
+#define LED     0
 
-void init(void)
+int main (void)
 {
-    wiringPiSetup() ; 
-    pinMode(23,OUTPUT);
-    pinMode(LEDY1,OUTPUT);
-    pinMode(LEDR1,OUTPUT);
-    pinMode(LEDG2,OUTPUT);
-    pinMode(LEDY2,OUTPUT);
-    pinMode(LEDR2,OUTPUT);
-}
+  printf ("Raspberry Pi - Gertboard Blink\n") ;
 
-int main(void)
-{
-   for(;;)   
-  {  
-    digitalWrite(23, HIGH) ;
-    digitalWrite(LEDY1, HIGH) ;
-    digitalWrite(LEDR1, HIGH) ;
-    digitalWrite(LEDG2, HIGH) ;
-    digitalWrite(LEDY2, HIGH) ;
-    digitalWrite(LEDR2, HIGH) ;
-    delay (500) ;  
-    digitalWrite(23,  LOW) ;
-    digitalWrite(LEDY1,  LOW) ;
-    digitalWrite(LEDR1,  LOW) ; 
-    digitalWrite(LEDG2,  LOW) ;
-    digitalWrite(LEDY2,  LOW) ;
-    digitalWrite(LEDR2,  LOW) ;delay (500) ;  
-  } 
+  wiringPiSetup () ;
+
+  pinMode (LED, OUTPUT) ;
+
+  for (;;)
+  {
+    digitalWrite (LED, 1) ;     // On
+    delay (500) ;               // mS
+    digitalWrite (LED, 0) ;     // Off
+    delay (500) ;
+  }
+  return 0 ;
 }
