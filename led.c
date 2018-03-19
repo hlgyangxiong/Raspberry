@@ -10,25 +10,34 @@
 #define LEDR2	29	
 
 void LED(int number);
+void Fan(int number);
+void Bell();
 
 void init(void)
 {
     wiringPiSetup() ; 
+    pinMode(0 ,OUTPUT);
+    pinMode(22,OUTPUT);
+    
     pinMode(LEDG1,OUTPUT);
     pinMode(LEDY1,OUTPUT);
     pinMode(LEDR1,OUTPUT);
+    
     pinMode(LEDG2,OUTPUT);
     pinMode(LEDY2,OUTPUT);
     pinMode(LEDR2,OUTPUT);
     
     LED(1);
     LED(4);
+    Fan(0);
+    digitalWrite(0,  LOW);
 }
 
 int main(void)
 {
     init(); 
-    
+    Fan(1);
+    Bell();
 }
 void LED(int number)
 {
@@ -64,5 +73,30 @@ void LED(int number)
                 digitalWrite(LEDR2, HIGH);
                 break;
         default:break;
+    }
+}
+
+void Fan(int number)
+{
+    switch(number)
+    {
+        case 0: digitalWrite(22,  LOW);
+                break;
+        case 1: digitalWrite(22, HIGH);
+                break;
+        default:break;
+    }
+}
+
+void Bell()
+{
+    int i;
+    for(i = 0; i < 6; i++)
+    {
+        digitalWrite(0,  LOW);
+        delay (500) ;
+        digitalWrite(0, HIGH);
+        delay (500) ;
+        printf ("the Buzzer will make sound") ;
     }
 }
