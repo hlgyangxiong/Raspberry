@@ -11,7 +11,7 @@
 void init(void)
 {
     wiringPiSetup() ; 
-    pinMode(LEDG1,OUTPUT);
+    pinMode(23,OUTPUT);
     pinMode(LEDY1,OUTPUT);
     pinMode(LEDR1,OUTPUT);
     pinMode(LEDG2,OUTPUT);
@@ -23,14 +23,14 @@ int main(void)
 {
    for(;;)   
   {  
-    digitalWrite(LEDG1, HIGH) ;
+    digitalWrite(23, HIGH) ;
     digitalWrite(LEDY1, HIGH) ;
     digitalWrite(LEDR1, HIGH) ;
     digitalWrite(LEDG2, HIGH) ;
     digitalWrite(LEDY2, HIGH) ;
     digitalWrite(LEDR2, HIGH) ;
     delay (500) ;  
-    digitalWrite(LEDG1,  LOW) ;
+    digitalWrite(23,  LOW) ;
     digitalWrite(LEDY1,  LOW) ;
     digitalWrite(LEDR1,  LOW) ; 
     digitalWrite(LEDG2,  LOW) ;
