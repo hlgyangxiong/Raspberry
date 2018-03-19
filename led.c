@@ -93,10 +93,11 @@ void Bell()
     int i;
     for(i = 0; i < 6; i++)
     {
+        printf ("the Buzzer will make sound\n");
         digitalWrite(0,  LOW);
         delay (500) ;
         digitalWrite(0, HIGH);
         delay (500) ;
-        printf ("the Buzzer will make sound") ;
+        
     }
 }
