@@ -9,6 +9,8 @@
 #define LEDY2	28
 #define LEDR2	29	
 
+int LED(int number);
+
 void init(void)
 {
     wiringPiSetup() ; 
