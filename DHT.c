@@ -1,86 +1,85 @@
-#include <wiringPi.h>  
-   
 #include <stdio.h>  
+#include <string.h>  
 #include <stdlib.h>  
-#include <stdint.h>  
-#define MAXTIMINGS  85  
-#define DHTPIN      2  
-int dht11_dat[5] = { 0, 0, 0, 0, 0 };  
-   
-void read_dht11_dat()  
+#include <dirent.h>  
+#include <fcntl.h>  
+#include <assert.h>  
+#include <unistd.h>  
+#include <sys/mman.h>  
+#include <sys/types.h>  
+#include <sys/stat.h>  
+#include <sys/time.h>  
+#include <unistd.h>  
+#include <bcm2835.h>  
+  
+#define DHT11_DATA RPI_V2_GPIO_P1_07   // RPi Pin #7  
+  
+int readDHT(int pin, unsigned int *data)  
 {  
-    uint8_t laststate   = HIGH;  
-    uint8_t counter     = 0;  
-    uint8_t j       = 0, i;  
-    float   f; /* fahrenheit */  
-   
-    dht11_dat[0] = dht11_dat[1] = dht11_dat[2] = dht11_dat[3] = dht11_dat[4] = 0;  
-   
-    /* pull pin down for 18 milliseconds */  
-    pinMode( DHTPIN, OUTPUT );  
-    digitalWrite( DHTPIN, LOW );  
-    delay( 18 );  
-    /* then pull it up for 40 microseconds */  
-    digitalWrite( DHTPIN, HIGH );  
-    delayMicroseconds( 40 );  
-    /* prepare to read the pin */  
-    pinMode( DHTPIN, INPUT );  
-   
-    /* detect change and read data */  
-    for ( i = 0; i < MAXTIMINGS; i++ )  
-    {  
+    int i = 0, j = 0;  
+    int counter = 0;  
+    int laststate = HIGH;  
+  
+    // Set GPIO pin to output  
+    bcm2835_gpio_fsel(pin, BCM2835_GPIO_FSEL_OUTP);  
+  
+    bcm2835_gpio_write(pin, HIGH);  
+    usleep(500000); // 500ms  
+    bcm2835_gpio_write(pin, LOW);  
+    usleep(20000);  // 20ms  
+  
+    // Set GPIO pin to input  
+    bcm2835_gpio_fsel(pin, BCM2835_GPIO_FSEL_INPT);  
+  
+    // wait for pin to drop?  
+    while (bcm2835_gpio_lev(pin) == 1) {  
+        usleep(1);  
+    }  
+  
+    // reading data  
+    for (i = 0; i < 100; i++) {  
         counter = 0;  
-        while ( digitalRead( DHTPIN ) == laststate )  
-        {  
+        while (bcm2835_gpio_lev(pin) == laststate) {  
             counter++;  
-            delayMicroseconds( 1 );  
-            if ( counter == 255 )  
-            {  
+            if (counter == 1000)  
                 break;  
-            }  
         }  
-        laststate = digitalRead( DHTPIN );  
-   
-        if ( counter == 255 )  
-            break;  
-   
-        /* ignore first 3 transitions */  
-        if ( (i >= 4) && (i % 2 == 0) )  
-        {  
-            /* shove each bit into the storage bytes */  
-            dht11_dat[j / 8] <<= 1;  
-            if ( counter > 16 )  
-                dht11_dat[j / 8] |= 1;  
+        if (counter == 1000) break;  
+        laststate = bcm2835_gpio_lev(pin);  
+  
+        // shove each bit into the storage bytes  
+        if ((i > 3) && (i % 2 == 0)) {  
+            data[j / 8] <<= 1;  
+            if (counter > 200)  
+                data[j / 8] |= 1;  
             j++;  
         }  
     }  
-   
-    /*  
-     * check we read 40 bits (8bit x 5 ) + verify checksum in the last byte  
-     * print it out if data is good  
-     */  
-    if ( (j >= 40) &&  
-         (dht11_dat[4] == ( (dht11_dat[0] + dht11_dat[1] + dht11_dat[2] + dht11_dat[3]) & 0xFF) ) )  
-    {  
-        f = dht11_dat[2] * 9. / 5. + 32;  
-        printf( "Humidity = %d.%d %% Temperature = %d.%d *C (%.1f *F)\n",  
-            dht11_dat[0], dht11_dat[1], dht11_dat[2], dht11_dat[3], f );  
-    }else  {  
-        printf( "Data not good, skip\n" );  
+  
+    /*printf("DHT11 Data (%d bits): 0x%x 0x%x 0x%x 0x%x 0x%x\n", 
+            j, data[0], data[1], data[2], data[3], data[4]);*/  
+    if (data[4] == ((data[0] + data[1] + data[2] + data[3]) & 0xFF)) {  
+        printf("Temp = %d *C, Hum = %d \%\n", data[2], data[0]);  
+        return 1;  
     }  
+  
+    return 0;  
 }  
-   
-int main( void )  
+  
+int main(int argc, char **argv)  
 {  
-    printf( "Raspberry Pi wiringPi DHT11 Temperature test program\n" );  
-   
-    wiringPiSetup();  
-   
-    while ( 1 )  
-    {  
-        read_dht11_dat();  
-        delay( 1000 ); /* wait 1sec to refresh */  
+    uint8_t counter = 0;  
+    uint32_t data[100];  
+  
+    if (!bcm2835_init())    
+        return 1;    
+  
+    while (counter < 10) {  
+        memset(data, 0, 100 * sizeof(uint32_t));  
+        if (readDHT(DHT11_DATA, data))  
+            counter++;  
     }  
-   
-    return(0);  
-} 
+  
+    bcm2835_close();    
+    return 0;    
+}
