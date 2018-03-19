@@ -1,7 +1,7 @@
 #include <wiringPi.h> 
 
 #define LEDG1	23
-#define LEDY1	24
+#define LEDY1	0
 #define LEDR1	25	
 
 #define LEDG2	27
