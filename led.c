@@ -11,12 +11,12 @@
 void init(void)
 {
     wiringPiSetup() ; 
-    pinMode(LEDG1,OUTPT);
-    pinMode(LEDY1,OUTPT);
-    pinMode(LEDR1,OUTPT);
-    pinMode(LEDG2,OUTPT);
-    pinMode(LEDY2,OUTPT);
-    pinMode(LEDR2,OUTPT);
+    pinMode(LEDG1,OUTPUT);
+    pinMode(LEDY1,OUTPUT);
+    pinMode(LEDR1,OUTPUT);
+    pinMode(LEDG2,OUTPUT);
+    pinMode(LEDY2,OUTPUT);
+    pinMode(LEDR2,OUTPUT);
 }
 
 int main(void)
