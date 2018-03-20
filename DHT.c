@@ -43,7 +43,7 @@ void dht11_read_val()
     } 
   }
   for(i = 0; i<40; i++){
-    printf(%d,dht11[i]);  
+    printf("%d,",dht11[i]);  
   }
   farenheit=dht11_val[2]*9./5.+32;  
   printf("Humidity = %d.%d %% Temperature = %d.%d *C (%.1f *F)\n",dht11_val[0],dht11_val[1],dht11_val[2],dht11_val[3],farenheit); 
