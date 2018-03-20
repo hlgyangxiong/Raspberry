@@ -10,7 +10,7 @@ int dht11[40]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 void dht11_read_val()  
 {  
   uint8_t counter=0;  
-  uint8_t j=0,i;  
+  uint8_t i;  
   float farenheit = 0;  
   for(i=0;i<5;i++)  
      dht11_val[i]=0;  
