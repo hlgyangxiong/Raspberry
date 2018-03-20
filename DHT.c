@@ -14,6 +14,8 @@ void dht11_read_val()
   float farenheit;  
   for(i=0;i<5;i++)  
      dht11_val[i]=0;  
+  printf("Humidity = %d.%d %% Temperature = %d.%d *C (%.1f *F)\n",dht11_val[0],dht11_val[1],dht11_val[2],dht11_val[3],farenheit); 
+
   pinMode(DHT11PIN,OUTPUT);  
   digitalWrite(DHT11PIN,LOW);  
   delay(18);  
