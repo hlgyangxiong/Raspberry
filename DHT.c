@@ -27,6 +27,7 @@ void dht11_read_val()
     counter=0;  
     while(digitalRead(DHT11PIN)==LOW){  
       continue; 
+      printf("counter = %d",counter);
     }
     while(digitalRead(DHT11PIN)==HIGH){  
       counter++; 
