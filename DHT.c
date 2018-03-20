@@ -32,7 +32,8 @@ void dht11_read_val()
     }
     while(digitalRead(DHT11PIN)==HIGH){  
       counter++; 
-      if(counter > 100){
+      printf("HIHG");
+      if(counter > 200){
         break;  
       }   
     }
