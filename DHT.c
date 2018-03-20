@@ -9,7 +9,6 @@ int dht11[40]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
   
 void dht11_read_val()  
 {  
-  uint8_t lststate=HIGH;  
   uint8_t counter=0;  
   uint8_t j=0,i;  
   float farenheit = 0;  
@@ -43,7 +42,9 @@ void dht11_read_val()
       dht11[i] = 1;
     } 
   }
-  printf(dht11);
+  for(i = 0; i<40; i++){
+    print(dht11[i]);  
+  }
   farenheit=dht11_val[2]*9./5.+32;  
   printf("Humidity = %d.%d %% Temperature = %d.%d *C (%.1f *F)\n",dht11_val[0],dht11_val[1],dht11_val[2],dht11_val[3],farenheit); 
   // verify cheksum and print the verified data  
