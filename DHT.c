@@ -33,12 +33,13 @@ void dht11_read_val()
     while(digitalRead(DHT11PIN)==HIGH){  
       counter++; 
       //printf("HIHG");
-      if(counter > 500){
+      delayMicroseconds(1);
+      if(counter > 100){
         break;  
       }   
     }
      
-    if(counter < 100){
+    if(counter < 40){
       dht11[i] = 0;  
     }
     else{
@@ -51,8 +52,14 @@ void dht11_read_val()
   farenheit=dht11_val[2]*9./5.+32;  
   printf("Humidity = %d.%d %% Temperature = %d.%d *C (%.1f *F)\n",dht11_val[0],dht11_val[1],dht11_val[2],dht11_val[3],farenheit); 
   // verify cheksum and print the verified data 
+  
   dht11_val[0] = dht11[0] + (dht11[1]<<1)+ (dht11[2]<<2)+ (dht11[3]<<3)+ (dht11[4]<<4)+ (dht11[5]<<5)+ (dht11[6]<<6)+ (dht11[7]<<7);
-  if(dht11_val[4]==((dht11_val[0]+dht11_val[1]+dht11_val[2]+dht11_val[3])& 0xFF))  
+  dht11_val[1] = dht11[8] + (dht11[9]<<9)+ (dht11[10]<<10)+ (dht11[11]<<11)+ (dht11[12]<<12)+ (dht11[13]<<13)+ (dht11[14]<<14)+ (dht11[15]<<15);
+  dht11_val[2] = dht11[16] + (dht11[17]<<17)+ (dht11[18]<<18)+ (dht11[19]<<19)+ (dht11[20]<<20)+ (dht11[21]<<21)+ (dht11[22]<<22)+ (dht11[23]<<23);
+  dht11_val[3] = dht11[24] + (dht11[25]<<25)+ (dht11[26]<<26)+ (dht11[27]<<27)+ (dht11[28]<<28)+ (dht11[29]<<29)+ (dht11[30]<<30)+ (dht11[31]<<31);
+  dht11_val[4] = dht11[32] + (dht11[33]<<33)+ (dht11[34]<<34)+ (dht11[35]<<35)+ (dht11[36]<<36)+ (dht11[37]<<37)+ (dht11[38]<<38)+ (dht11[39]<<39);
+ 
+ if(dht11_val[4]==((dht11_val[0]+dht11_val[1]+dht11_val[2]+dht11_val[3])& 0xFF))  
   {  
     farenheit=dht11_val[2]*9./5.+32;  
     printf("Humidity = %d.%d %% Temperature = %d.%d *C (%.1f *F)\n",dht11_val[0],dht11_val[1],dht11_val[2],dht11_val[3],farenheit);  
