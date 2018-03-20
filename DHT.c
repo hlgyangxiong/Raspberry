@@ -35,7 +35,7 @@ void dht11_read_val()
       }   
     }
      
-    if(counter < 8){
+    if(counter < 16){
       dht11[i] = 0;  
     }
     else{
