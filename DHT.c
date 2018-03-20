@@ -59,7 +59,8 @@ void dht11_read_val()
   dht11_val[3] = dht11[24] + (dht11[25]<<1)+ (dht11[26]<<2)+ (dht11[27]<<3)+ (dht11[28]<<4)+ (dht11[29]<<5)+ (dht11[30]<<6)+ (dht11[31]<<7);
   dht11_val[4] = dht11[32] + (dht11[33]<<1)+ (dht11[34]<<2)+ (dht11[35]<<3)+ (dht11[36]<<4)+ (dht11[37]<<5)+ (dht11[38]<<6)+ (dht11[39]<<7);
  
- if(dht11_val[4]==((dht11_val[0]+dht11_val[1]+dht11_val[2]+dht11_val[3])& 0xFF))  
+ //if(dht11_val[4]==((dht11_val[0]+dht11_val[1]+dht11_val[2]+dht11_val[3])& 0xFF)) 
+   if(1)
   {  
     farenheit=dht11_val[2]*9./5.+32;  
     printf("Humidity = %d.%d %% Temperature = %d.%d *C (%.1f *F)\n",dht11_val[0],dht11_val[1],dht11_val[2],dht11_val[3],farenheit);  
