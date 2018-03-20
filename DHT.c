@@ -11,7 +11,7 @@ void dht11_read_val()
   uint8_t lststate=HIGH;  
   uint8_t counter=0;  
   uint8_t j=0,i;  
-  float farenheit;  
+  float farenheit = 0;  
   for(i=0;i<5;i++)  
      dht11_val[i]=0;  
   printf("Humidity = %d.%d %% Temperature = %d.%d *C (%.1f *F)\n",dht11_val[0],dht11_val[1],dht11_val[2],dht11_val[3],farenheit); 
