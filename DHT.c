@@ -66,7 +66,7 @@ int dht11_read_val(int *h, int *t) {
         // is not accurate enough for decimals anyway 
         *h = dht11_val[0];
         *t = dht11_val[2];
-         f = dht11_dat[2] * 9. / 5. + 32; 
+         f = dht11_val[2] * 9. / 5. + 32; 
         printf( "Humidity = %d.%d %% Temperature = %d.%d *C (%.1f *F)\n",  
             dht11_val[0], dht11_val[1], dht11_val[2], dht11_val[3], f ); 
         return 0;
