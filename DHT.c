@@ -78,9 +78,7 @@ int dht11_read_val(int *h, int *t) {
 
 int main(int argc, char *argv[]) {
     int h; //humidity
-    int t; //temperature in degrees Celsius
-    float f; //temperature in degrees Fahrenheit
-  
+    int t; //temperature in degrees Celsius 
     
     // error out if wiringPi can't be used
     if (wiringPiSetup()==-1) {
