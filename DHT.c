@@ -2,9 +2,10 @@
 #include <stdio.h>  
 #include <stdlib.h>  
 #include <stdint.h>  
-#define MAX_TIME 85  
+#define MAX_TIME 40  
 #define DHT11PIN 7  
-int dht11_val[5]={0,0,0,0,0};  
+int dht11_val[5]={0,0,0,0,0}; 
+int dht11[40]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};  
   
 void dht11_read_val()  
 {  
@@ -25,23 +26,24 @@ void dht11_read_val()
   for(i=0;i<MAX_TIME;i++)  
   {  
     counter=0;  
-    while(digitalRead(DHT11PIN)==lststate){  
-      counter++;  
-      delayMicroseconds(1);  
-      if(counter==255)  
+    while(digitalRead(DHT11PIN)==LOW){  
+      continue; 
+    }
+    while(digitalRead(DHT11PIN)==HIGH){  
+      counter++; 
+      if(counter > 100){
         break;  
-    }  
-    lststate=digitalRead(DHT11PIN);  
-    if(counter==255)  
-       break;  
-    // top 3 transistions are ignored  
-    if((i>=4)&&(i%2==0)){  
-      dht11_val[j/8]<<=1;  
-      if(counter>16)  
-        dht11_val[j/8]|=1;  
-      j++;  
-    }  
-  }  
+      }   
+    }
+     
+    if(counter < 8){
+      dht11[i] = 0;  
+    }
+    else{
+      dht11[i] = 1;
+    } 
+  }
+  printf(dht11);
   farenheit=dht11_val[2]*9./5.+32;  
   printf("Humidity = %d.%d %% Temperature = %d.%d *C (%.1f *F)\n",dht11_val[0],dht11_val[1],dht11_val[2],dht11_val[3],farenheit); 
   // verify cheksum and print the verified data  
