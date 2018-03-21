@@ -15,7 +15,7 @@ int main()
         exit(0); 
     } 
     sprintf(buf, "%d,%d,%d,%d", i, a, b, c);
-    fwrite(buf,strlen(buf),1 fp);//试验数据，文件存在时尝试，文件不存在时尝试 
+    fwrite(buf,strlen(buf),1 ,fp);//试验数据，文件存在时尝试，文件不存在时尝试 
     fclose(fp); 
     return 0; 
 }
