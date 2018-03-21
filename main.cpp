@@ -30,25 +30,19 @@ void dht11_read_val(int *Humidity,int *Temperature);
 
 int main(void)
 {
-    int i;
     int Humidity    = 0;
     int Temperature = 0;
     int HC_SR501_Flag = 0;
     int Slant_Flag = 0;
+    FILE *fp; 
+    char buf[100] = "";
     
     init();
 
-   // while(1)
-    //{
-    //  dht11_read_val(&Humidity,&Temperature);
-    //  printf("Humidity = %d.%d %% Temperature = %d.%d *C \n",Humidity,dht11_val[1],Temperature,dht11_val[3]);
-    //  delay(3000);
-    //}
     while(1)
     {
       delay(3000);
       dht11_read_val(&Humidity,&Temperature);
-      //printf("Humidity = %d.%d %% Temperature = %d.%d *C \n",dht11_val[0],dht11_val[1],dht11_val[2],dht11_val[3]);
       
       if(Temperature <= 25)
       {
@@ -101,7 +95,16 @@ int main(void)
           Slant_Flag = 0;
         }  
       }
-      printf("[%d,%d,%d,%d]\n",dht11_val[2],dht11_val[0],HC_SR501_Flag,Slant_Flag);    
+      printf("[%d,%d,%d,%d]\n",dht11_val[2],dht11_val[0],HC_SR501_Flag,Slant_Flag); 
+
+      if((fp=fopen("data.txt","w+"))==NULL)//如果文件不存在，新建文件，写数据 
+      { 
+        //printf("Can not open file.\n"); 
+        exit(0); 
+      } 
+      sprintf(buf, "%d,%d,%d,%d", Temperature, Humidity, HC_SR501_Flag, Slant_Flag);
+      fwrite(buf,strlen(buf),1 ,fp);//试验数据，文件存在时尝试，文件不存在时尝试 
+      fclose(fp);
     }
     
 
