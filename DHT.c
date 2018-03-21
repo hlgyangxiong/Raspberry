@@ -43,19 +43,14 @@ int dht11_read_val()
         break;  
       }   
     }
-    //if(i>=1){ 
-    dht11_dat[j / 8] <<= 1;  
-            if ( counter > 16 )  
-                dht11_dat[j / 8] |= 1; 
-      if(counter < 35){
-        dht11_dat[i/8] <<= 1; 
-        dht11[i] = 0;  
-      }
-      else{
-        dht11_dat[i/8] |= 1;
-        dht11[i] = 1;
-      } 
-    //}
+    if(counter < 35){
+      dht11_dat[i/8] <<= 1; 
+      dht11[i] = 0;  
+    }
+    else{
+      dht11_dat[i/8] |= 1;
+      dht11[i] = 1;
+    } 
   }
   
   for(i = 0; i<40; i++){
