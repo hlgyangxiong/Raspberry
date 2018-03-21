@@ -36,7 +36,7 @@ int main(void)
     int Slant_Flag = 0;
     
     init(); 
-    //LED(2);
+    LED(3);
     while(1);
     while(1)
     {
