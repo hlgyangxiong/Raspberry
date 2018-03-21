@@ -175,7 +175,7 @@ int dht11_read_val(int Humidity,int Temperature)
   
   if(dht11_val[4]==((dht11_val[0]+dht11_val[1]+dht11_val[2]+dht11_val[3])& 0xFF)) 
   {  
-    farenheit=dht11_val[2]*9./5.+32;  
+    //farenheit=dht11_val[2]*9./5.+32;  
     //printf("Humidity = %d.%d %% Temperature = %d.%d *C (%.1f *F)\n",dht11_val[0],dht11_val[1],dht11_val[2],dht11_val[3],farenheit); 
     Humidity    = dht11_val[0];
     Temperature = dht11_val[2];
