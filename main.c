@@ -40,7 +40,7 @@ int main(void)
 
     while(1)
     {
-      if(dht11_read_val(&Humidity,&Temperature))
+      if(dht11_read_val(&Humidity,&Temperature) == 1)
       {
         printf("Humidity = %d.%d %% Temperature = %d.%d *C \n",Humidity,dht11_val[1],Temperature,dht11_val[3]);
       }   
