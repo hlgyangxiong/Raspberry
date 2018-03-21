@@ -35,7 +35,15 @@ int main(void)
     int HC_SR501_Flag = 0;
     int Slant_Flag = 0;
     
-    init(); 
+    init();
+
+    while(1)
+    {
+      if(dht11_read_val())
+      {
+        printf("Humidity = %d.%d %% Temperature = %d.%d *C \n",Humidity,dht11_val[1],Temperature,dht11_val[3]);
+      }   
+    }
     while(1)
     {
       delay(1000);
@@ -100,7 +108,7 @@ int main(void)
           Slant_Flag = 0;
         }  
       }
-      printf("[%d,%d,%d,%d]\n",Temperature,dht11_val[0],HC_SR501_Flag,Slant_Flag);    
+      printf("[%d,%d,%d,%d]\n",dht11_val[2],dht11_val[0],HC_SR501_Flag,Slant_Flag);    
     }
     
 
@@ -190,7 +198,7 @@ void Bell()
     }
 }
 
-int dht11_read_val(int Humidity,int Temperature)  
+int dht11_read_val()  
 {  
   int counter=0;  
   uint8_t i;   
@@ -234,13 +242,12 @@ int dht11_read_val(int Humidity,int Temperature)
   // verify cheksum and print the verified data 
   if(dht11_val[4]==((dht11_val[0]+dht11_val[1]+dht11_val[2]+dht11_val[3])& 0xFF)) 
   {  
-   // Humidity    = dht11_val[0];
-  //  Temperature = dht11_val[2];
+    Humidity    = dht11_val[0];
+    Temperature = dht11_val[2];
     return 1;
   }  
   else  
   {
-    //printf("Invalid Data!!\n"); 
     return 0;
   }
 }
