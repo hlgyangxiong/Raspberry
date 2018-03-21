@@ -6,13 +6,16 @@
 #define DHT11_MAX_TIME 40  
 #define DHT11PIN 7 
 
-#define LEDG1	23
-#define LEDY1	24
-#define LEDR1	25	
+#define LEDG1	 23
+#define LEDY1	 24
+#define LEDR1	 25	
 
-#define LEDG2	27
-#define LEDY2	28
-#define LEDR2	29	
+#define LEDG2	 27
+#define LEDY2	 28
+#define LEDR2	 29
+
+#define Slant	 26
+#define HC_SR501 1		
 
 int dht11_val[5]={0,0,0,0,0}; 
 
@@ -29,18 +32,75 @@ int main(void)
     int i;
     int Humidity    = 0;
     int Temperature = 0;
-    float farenheit = 0; 
+    int HC_SR501_Flag = 0;
+    int Slant_Flag = 0;
     
     init(); 
     
-    for(i = 0; i < 4; i++)
+    while(1)
     {
+      delay(1000);
+      for(i = 0; i < 4; i++)
+      {
         if(dht11_read_val(Humidity,Temperature) == 1)
         {
-            farenheit=dht11_val[2]*9./5.+32; 
-            printf("Humidity = %d.%d %% Temperature = %d.%d *C (%.1f *F)\n",dht11_val[0],dht11_val[1],dht11_val[2],dht11_val[3],farenheit);
-            break;
+          printf("Humidity = %d.%d %% Temperature = %d.%d *C \n",dht11_val[0],dht11_val[1],dht11_val[2],dht11_val[3]);
+          break;
         }
+      }
+      
+      if(Temperature <= 25)
+      {
+        LED(1);
+        Fan(0);
+      }
+      else if(Temperature <= 30)
+      {
+        LED(2);
+        Fan(1);  
+      }
+      else if(Temperature > 30)
+      {
+        LED(3);
+        Fan(1);  
+      }
+      
+      
+      if(digitalRead(HC_SR501) == HIGH)
+      {
+        printf("Someone is closing! \n");
+        HC_SR501_Flag = 1;
+        LED(5);
+        if(digitalRead(Slant) == LOW)
+        {
+          printf("Something is slanting! \n"); 
+          LED(7);
+          Slant_Flag = 1;
+          Bell();
+        }
+        else
+        {
+          Slant_Flag = 0;
+        }
+      }
+      
+      else
+      {
+        printf("Noanybody! \n");
+        HC_SR501_Flag = 0;
+        if(digitalRead(Slant) == LOW)
+        {
+          printf("Something is slanting! \n"); 
+          LED(6);
+          Slant_Flag = 1;
+          Bell();
+        }
+        else
+        {
+          LED(4);
+          Slant_Flag = 0;
+        }  
+      }
     }
     
 
@@ -51,7 +111,7 @@ void init(void)
     wiringPiSetup() ; 
     pinMode(0 ,OUTPUT);
     pinMode(22,OUTPUT);
-    
+ 
     pinMode(LEDG1,OUTPUT);
     pinMode(LEDY1,OUTPUT);
     pinMode(LEDR1,OUTPUT);
@@ -59,6 +119,9 @@ void init(void)
     pinMode(LEDG2,OUTPUT);
     pinMode(LEDY2,OUTPUT);
     pinMode(LEDR2,OUTPUT);
+    
+    pinMode(Slant,INPUT);
+    pinMode(HC_SR501,INPUT);
     
     LED(1);
     LED(4);
@@ -123,16 +186,14 @@ void Bell()
         digitalWrite(0,  LOW);
         delay (500) ;
         digitalWrite(0, HIGH);
-        delay (500) ;
-        
+        delay (500) ;    
     }
 }
 
 int dht11_read_val(int Humidity,int Temperature)  
 {  
   int counter=0;  
-  uint8_t i;  
-  //float farenheit = 0;  
+  uint8_t i;   
   for(i = 0; i < 5; i++)  
      dht11_val[i]=0;  
 
@@ -153,8 +214,7 @@ int dht11_read_val(int Humidity,int Temperature)
   {  
     counter=0;  
     while(digitalRead(DHT11PIN)==LOW){
-      continue; 
-      
+      continue;   
     }
     while(digitalRead(DHT11PIN)==HIGH){  
       counter++; 
@@ -172,11 +232,8 @@ int dht11_read_val(int Humidity,int Temperature)
   }
   
   // verify cheksum and print the verified data 
-  
   if(dht11_val[4]==((dht11_val[0]+dht11_val[1]+dht11_val[2]+dht11_val[3])& 0xFF)) 
   {  
-    //farenheit=dht11_val[2]*9./5.+32;  
-    //printf("Humidity = %d.%d %% Temperature = %d.%d *C (%.1f *F)\n",dht11_val[0],dht11_val[1],dht11_val[2],dht11_val[3],farenheit); 
     Humidity    = dht11_val[0];
     Temperature = dht11_val[2];
     return 1;
