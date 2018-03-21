@@ -3,10 +3,10 @@
 #include <string.h>
 int main() 
 { 
-    int i = 1234;
-    int a = 1;
-    int b = 2;
-    int c = 3;
+    int i = 123;
+    int a = 2;
+    int b = 3;
+    int c = 4;
     FILE *fp; 
     char buf[100] = "";
     if((fp=fopen("data.txt","w+"))==NULL)//如果文件不存在，新建文件，写数据 
