@@ -7,7 +7,7 @@
 int dht11_val[5]={0,0,0,0,0}; 
 int dht11[40]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};  
   
-void dht11_read_val()  
+int dht11_read_val()  
 {  
   int counter=0;  
   uint8_t i;  
@@ -44,10 +44,15 @@ void dht11_read_val()
       }   
     }
     //if(i>=1){ 
+    dht11_dat[j / 8] <<= 1;  
+            if ( counter > 16 )  
+                dht11_dat[j / 8] |= 1; 
       if(counter < 35){
+        dht11_dat[i/8] <<= 1; 
         dht11[i] = 0;  
       }
       else{
+        dht11_dat[i/8] |= 1;
         dht11[i] = 1;
       } 
     //}
@@ -58,20 +63,23 @@ void dht11_read_val()
   }
   // verify cheksum and print the verified data 
   
-  dht11_val[0] = (dht11[0] <<7) + (dht11[1] <<6)+ (dht11[2] <<5)+ (dht11[3] <<4)+ (dht11[4] <<3)+ (dht11[5] <<2)+ (dht11[6] <<1)+ dht11[7 ];
-  dht11_val[1] = (dht11[8] <<7) + (dht11[9] <<6)+ (dht11[10]<<5)+ (dht11[11]<<4)+ (dht11[12]<<3)+ (dht11[13]<<2)+ (dht11[14]<<1)+ dht11[15];
-  dht11_val[2] = (dht11[16]<<7) + (dht11[17]<<6)+ (dht11[18]<<5)+ (dht11[19]<<4)+ (dht11[20]<<3)+ (dht11[21]<<2)+ (dht11[22]<<1)+ dht11[23];
-  dht11_val[3] = (dht11[24]<<7) + (dht11[25]<<6)+ (dht11[26]<<5)+ (dht11[27]<<4)+ (dht11[28]<<3)+ (dht11[29]<<2)+ (dht11[30]<<1)+ dht11[31];
-  dht11_val[4] = (dht11[32]<<7) + (dht11[33]<<6)+ (dht11[34]<<5)+ (dht11[35]<<4)+ (dht11[36]<<3)+ (dht11[37]<<2)+ (dht11[38]<<1)+ dht11[39];
+  //dht11_val[0] = (dht11[0] <<7) + (dht11[1] <<6)+ (dht11[2] <<5)+ (dht11[3] <<4)+ (dht11[4] <<3)+ (dht11[5] <<2)+ (dht11[6] <<1)+ dht11[7 ];
+  //dht11_val[1] = (dht11[8] <<7) + (dht11[9] <<6)+ (dht11[10]<<5)+ (dht11[11]<<4)+ (dht11[12]<<3)+ (dht11[13]<<2)+ (dht11[14]<<1)+ dht11[15];
+  //dht11_val[2] = (dht11[16]<<7) + (dht11[17]<<6)+ (dht11[18]<<5)+ (dht11[19]<<4)+ (dht11[20]<<3)+ (dht11[21]<<2)+ (dht11[22]<<1)+ dht11[23];
+  //dht11_val[3] = (dht11[24]<<7) + (dht11[25]<<6)+ (dht11[26]<<5)+ (dht11[27]<<4)+ (dht11[28]<<3)+ (dht11[29]<<2)+ (dht11[30]<<1)+ dht11[31];
+  //dht11_val[4] = (dht11[32]<<7) + (dht11[33]<<6)+ (dht11[34]<<5)+ (dht11[35]<<4)+ (dht11[36]<<3)+ (dht11[37]<<2)+ (dht11[38]<<1)+ dht11[39];
  
   if(dht11_val[4]==((dht11_val[0]+dht11_val[1]+dht11_val[2]+dht11_val[3])& 0xFF)) 
-   //if(1)
   {  
     farenheit=dht11_val[2]*9./5.+32;  
     printf("Humidity = %d.%d %% Temperature = %d.%d *C (%.1f *F)\n",dht11_val[0],dht11_val[1],dht11_val[2],dht11_val[3],farenheit);  
+    return 1;
   }  
   else  
-    printf("Invalid Data!!\n");  
+  {
+    //printf("Invalid Data!!\n"); 
+    return 0;
+  }
 }  
   
 int main(void)  
