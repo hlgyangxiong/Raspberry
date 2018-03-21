@@ -24,7 +24,7 @@ void init(void);
 void LED(int number);
 void Fan(int number);
 void Bell();
-int dht11_read_val(int *Humidity,int *Temperature);
+void dht11_read_val(int *Humidity,int *Temperature);
 
 
 
@@ -40,10 +40,9 @@ int main(void)
 
     while(1)
     {
-      if(dht11_read_val(&Humidity,&Temperature) == 1)
-      {
-        printf("Humidity = %d.%d %% Temperature = %d.%d *C \n",Humidity,dht11_val[1],Temperature,dht11_val[3]);
-      }   
+      dht11_read_val(&Humidity,&Temperature);
+      printf("Humidity = %d.%d %% Temperature = %d.%d *C \n",Humidity,dht11_val[1],Temperature,dht11_val[3]);
+  
     }
     while(1)
     {
@@ -199,7 +198,7 @@ void Bell()
     }
 }
 
-int dht11_read_val(int *Humidity,int *Temperature)  
+void dht11_read_val(int *Humidity,int *Temperature)  
 {  
   int counter=0;  
   uint8_t i;   
@@ -245,10 +244,12 @@ int dht11_read_val(int *Humidity,int *Temperature)
   {  
     *Humidity    = dht11_val[0];
     *Temperature = dht11_val[2];
-    return 1;
+    printf("Humidity = %d.%d %% Temperature = %d.%d \n",dht11_val[0],dht11_val[1],dht11_val[2],dht11_val[3]);  
+    //return 1;
   }  
   else  
   {
-    return 0;
+    printf("Invalid Data!!\n");
+    //return 0;
   }
 }
