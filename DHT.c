@@ -35,7 +35,7 @@ int main(void)
     
     for(i = 0; i < 4; i++)
     {
-        if(dht11_read_val() == 1)
+        if(dht11_read_val(Humidity,Temperature) == 1)
         {
             farenheit=dht11_val[2]*9./5.+32; 
             printf("Humidity = %d.%d %% Temperature = %d.%d *C (%.1f *F)\n",dht11_val[0],dht11_val[1],dht11_val[2],dht11_val[3],farenheit);
@@ -149,7 +149,7 @@ int dht11_read_val(int Humidity,int Temperature)
     continue; 
   }
              
-  for(i=0;i<MAX_TIME;i++)  
+  for(i=0;i<DHT11_MAX_TIME;i++)  
   {  
     counter=0;  
     while(digitalRead(DHT11PIN)==LOW){
