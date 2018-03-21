@@ -128,7 +128,7 @@ void init(void)
     LED(1);
     LED(4);
     Fan(0);
-    digitalWrite(0,LOW);
+    digitalWrite(0,HIGH);
 }
 void LED(int number)
 {
@@ -171,9 +171,9 @@ void Fan(int number)
 {
     switch(number)
     {
-        case 0: digitalWrite(22,  LOW);
+        case 0: digitalWrite(22, HIGH );
                 break;
-        case 1: digitalWrite(22, HIGH);
+        case 1: digitalWrite(22, LOW);
                 break;
         default:break;
     }
