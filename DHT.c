@@ -2,7 +2,7 @@
 #include <stdio.h>  
 #include <stdlib.h>  
 #include <stdint.h>  
-#define MAX_TIME 40  
+#define MAX_TIME 41  
 #define DHT11PIN 7  
 int dht11_val[5]={0,0,0,0,0}; 
 int dht11[40]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};  
@@ -38,14 +38,16 @@ void dht11_read_val()
         break;  
       }   
     }
-     
-    if(counter < 30){
-      dht11[i] = 0;  
+    if(i>=1){ 
+      if(counter < 30){
+        dht11[i-1] = 0;  
+      }
+      else{
+        dht11[i-1] = 1;
+      } 
     }
-    else{
-      dht11[i] = 1;
-    } 
   }
+  
   for(i = 0; i<40; i++){
     printf("%d,",dht11[i]);  
   }
