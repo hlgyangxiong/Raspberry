@@ -2,6 +2,7 @@
 #include <wiringPi.h> 
 #include <stdlib.h>  
 #include <stdint.h>  
+#include <string.h>
 
 #define DHT11_MAX_TIME 40  
 #define DHT11PIN 7 
