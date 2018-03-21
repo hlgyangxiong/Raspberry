@@ -38,38 +38,33 @@ int main(void)
     
     init();
 
+   // while(1)
+    //{
+    //  dht11_read_val(&Humidity,&Temperature);
+    //  printf("Humidity = %d.%d %% Temperature = %d.%d *C \n",Humidity,dht11_val[1],Temperature,dht11_val[3]);
+    //  delay(3000);
+    //}
     while(1)
     {
-      dht11_read_val(&Humidity,&Temperature);
-      printf("Humidity = %d.%d %% Temperature = %d.%d *C \n",Humidity,dht11_val[1],Temperature,dht11_val[3]);
       delay(3000);
-    }
-    while(1)
-    {
-      delay(1000);
-      for(i = 0; i < 4; i++)
-      {
-        dht11_read_val(&Humidity,&Temperature);
-        printf("Humidity = %d.%d %% Temperature = %d.%d *C \n",dht11_val[0],dht11_val[1],dht11_val[2],dht11_val[3]);
-        break;
-      }
+      dht11_read_val(&Humidity,&Temperature);
+      //printf("Humidity = %d.%d %% Temperature = %d.%d *C \n",dht11_val[0],dht11_val[1],dht11_val[2],dht11_val[3]);
       
-      if(dht11_val[2] <= 25)
+      if(Temperature <= 25)
       {
         LED(1);
         Fan(0);
       }
-      else if(dht11_val[2] <= 30)
+      else if(Temperature <= 30)
       {
         LED(2);
         Fan(1);  
       }
-      else if(dht11_val[2] > 30)
+      else if(Temperature > 30)
       {
         LED(3);
         Fan(1);  
       }
-      
       
       if(digitalRead(HC_SR501) == HIGH)
       {
