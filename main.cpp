@@ -49,11 +49,9 @@ int main(void)
       delay(1000);
       for(i = 0; i < 4; i++)
       {
-        if(dht11_read_val(&Humidity,&Temperature) == 1)
-        {
-          printf("Humidity = %d.%d %% Temperature = %d.%d *C \n",dht11_val[0],dht11_val[1],dht11_val[2],dht11_val[3]);
-          break;
-        }
+        dht11_read_val(&Humidity,&Temperature);
+        printf("Humidity = %d.%d %% Temperature = %d.%d *C \n",dht11_val[0],dht11_val[1],dht11_val[2],dht11_val[3]);
+        break;
       }
       
       if(dht11_val[2] <= 25)
