@@ -2,7 +2,7 @@
 #include <stdio.h>  
 #include <stdlib.h>  
 #include <stdint.h>  
-#define MAX_TIME 41  
+#define MAX_TIME 40  
 #define DHT11PIN 7  
 int dht11_val[5]={0,0,0,0,0}; 
 int dht11[40]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};  
@@ -14,7 +14,6 @@ void dht11_read_val()
   float farenheit = 0;  
   for(i=0;i<5;i++)  
      dht11_val[i]=0;  
-  printf("Humidity = %d.%d %% Temperature = %d.%d *C (%.1f *F)\n",dht11_val[0],dht11_val[1],dht11_val[2],dht11_val[3],farenheit); 
 
   pinMode(DHT11PIN,OUTPUT);  
   digitalWrite(DHT11PIN,LOW);  
@@ -22,11 +21,17 @@ void dht11_read_val()
   digitalWrite(DHT11PIN,HIGH);  
   delayMicroseconds(40);  
   pinMode(DHT11PIN,INPUT);  
+  while(digitalRead(DHT11PIN)==LOW){ 
+    continue; 
+  }  
+  while(digitalRead(DHT11PIN)==HIGH){ 
+    continue; 
+  }
+             
   for(i=0;i<MAX_TIME;i++)  
   {  
     counter=0;  
     while(digitalRead(DHT11PIN)==LOW){
-      //printf("counter = %d",counter);        
       continue; 
       
     }
@@ -38,14 +43,14 @@ void dht11_read_val()
         break;  
       }   
     }
-    if(i>=1){ 
-      if(counter < 30){
-        dht11[i-1] = 0;  
+    //if(i>=1){ 
+      if(counter < 25){
+        dht11[i] = 0;  
       }
       else{
-        dht11[i-1] = 1;
+        dht11[i] = 1;
       } 
-    }
+    //}
   }
   
   for(i = 0; i<40; i++){
