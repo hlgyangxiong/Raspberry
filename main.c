@@ -36,7 +36,7 @@ int main(void)
     int Slant_Flag = 0;
     
     init(); 
-    LED(2);
+    //LED(2);
     while(1);
     while(1)
     {
@@ -128,7 +128,7 @@ void init(void)
     LED(1);
     LED(4);
     Fan(0);
-    digitalWrite(0,  LOW);
+    digitalWrite(0,LOW);
 }
 void LED(int number)
 {
