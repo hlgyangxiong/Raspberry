@@ -36,8 +36,6 @@ int main(void)
     int Slant_Flag = 0;
     
     init(); 
-    LED(3);
-    while(1);
     while(1)
     {
       delay(1000);
@@ -102,7 +100,7 @@ int main(void)
           Slant_Flag = 0;
         }  
       }
-      printf("[%d,%d,%d,%d]\n",dht11_val[2],dht11_val[0],HC_SR501_Flag,Slant_Flag);    
+      printf("[%d,%d,%d,%d]\n",Temperature,dht11_val[0],HC_SR501_Flag,Slant_Flag);    
     }
     
 
