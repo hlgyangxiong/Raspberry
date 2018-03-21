@@ -1,18 +1,139 @@
-#include <wiringPi.h>  
-#include <stdio.h>  
+#include <stdio.h>
+#include <wiringPi.h> 
 #include <stdlib.h>  
 #include <stdint.h>  
-#define MAX_TIME 40  
-#define DHT11PIN 7  
+
+#define DHT11_MAX_TIME 40  
+#define DHT11PIN 7 
+
+#define LEDG1	23
+#define LEDY1	24
+#define LEDR1	25	
+
+#define LEDG2	27
+#define LEDY2	28
+#define LEDR2	29	
+
 int dht11_val[5]={0,0,0,0,0}; 
-int dht11[40]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};  
-  
-int dht11_read_val()  
+
+void init(void);
+void LED(int number);
+void Fan(int number);
+void Bell();
+int dht11_read_val();
+
+
+
+int main(void)
+{
+    int i;
+    int Humidity    = 0;
+    int Temperature = 0;
+    float farenheit = 0; 
+    
+    init(); 
+    
+    for(i = 0; i < 4; i++)
+    {
+        if(dht11_read_val() == 1)
+        {
+            farenheit=dht11_val[2]*9./5.+32; 
+            printf("Humidity = %d.%d %% Temperature = %d.%d *C (%.1f *F)\n",dht11_val[0],dht11_val[1],dht11_val[2],dht11_val[3],farenheit);
+            break;
+        }
+    }
+    
+
+}
+
+void init(void)
+{
+    wiringPiSetup() ; 
+    pinMode(0 ,OUTPUT);
+    pinMode(22,OUTPUT);
+    
+    pinMode(LEDG1,OUTPUT);
+    pinMode(LEDY1,OUTPUT);
+    pinMode(LEDR1,OUTPUT);
+    
+    pinMode(LEDG2,OUTPUT);
+    pinMode(LEDY2,OUTPUT);
+    pinMode(LEDR2,OUTPUT);
+    
+    LED(1);
+    LED(4);
+    Fan(0);
+    digitalWrite(0,  LOW);
+}
+void LED(int number)
+{
+    switch(number)
+    {
+        case 1: digitalWrite(LEDG1, HIGH);
+                digitalWrite(LEDY1,  LOW);
+                digitalWrite(LEDR1,  LOW);
+                break;
+        case 2: digitalWrite(LEDG1, LOW);
+                digitalWrite(LEDY1, HIGH);
+                digitalWrite(LEDR1, LOW);
+                break;
+        case 3: digitalWrite(LEDG1, LOW);
+                digitalWrite(LEDY1, LOW);
+                digitalWrite(LEDR1, HIGH);
+                break;
+                
+        case 4: digitalWrite(LEDG2, HIGH);
+                digitalWrite(LEDY2,  LOW);
+                digitalWrite(LEDR2,  LOW);
+                break;
+        case 5: digitalWrite(LEDG2, LOW);
+                digitalWrite(LEDY2, HIGH);
+                digitalWrite(LEDR2, LOW);
+                break;
+        case 6: digitalWrite(LEDG2, LOW);
+                digitalWrite(LEDY2, LOW);
+                digitalWrite(LEDR2, HIGH);
+                break;
+        case 7: digitalWrite(LEDG2, LOW);
+                digitalWrite(LEDY2, HIGH);
+                digitalWrite(LEDR2, HIGH);
+                break;
+        default:break;
+    }
+}
+
+void Fan(int number)
+{
+    switch(number)
+    {
+        case 0: digitalWrite(22,  LOW);
+                break;
+        case 1: digitalWrite(22, HIGH);
+                break;
+        default:break;
+    }
+}
+
+void Bell()
+{
+    int i;
+    for(i = 0; i < 5; i++)
+    {
+        printf ("the Buzzer will make sound\n");
+        digitalWrite(0,  LOW);
+        delay (500) ;
+        digitalWrite(0, HIGH);
+        delay (500) ;
+        
+    }
+}
+
+int dht11_read_val(int Humidity,int Temperature)  
 {  
   int counter=0;  
   uint8_t i;  
-  float farenheit = 0;  
-  for(i=0;i<5;i++)  
+  //float farenheit = 0;  
+  for(i = 0; i < 5; i++)  
      dht11_val[i]=0;  
 
   pinMode(DHT11PIN,OUTPUT);  
@@ -37,37 +158,27 @@ int dht11_read_val()
     }
     while(digitalRead(DHT11PIN)==HIGH){  
       counter++; 
-      //printf("HIHG");
       delayMicroseconds(1);
       if(counter > 100){
         break;  
       }   
     }
     if(counter < 35){
-      dht11_val[i/8] = dht11_val[i/8] + ( 0 << (7-i%8)); 
-      dht11[i] = 0;  
+      dht11_val[i/8] = dht11_val[i/8] + ( 0 << (7-i%8));  
     }
     else{
       dht11_val[i/8] = dht11_val[i/8] + ( 1 << (7-i%8));
-      dht11[i] = 1;
     } 
   }
   
-  for(i = 0; i<40; i++){
-    printf("%d,",dht11[i]);  
-  }
   // verify cheksum and print the verified data 
   
-  //dht11_val[0] = (dht11[0] <<7) + (dht11[1] <<6)+ (dht11[2] <<5)+ (dht11[3] <<4)+ (dht11[4] <<3)+ (dht11[5] <<2)+ (dht11[6] <<1)+ dht11[7 ];
-  //dht11_val[1] = (dht11[8] <<7) + (dht11[9] <<6)+ (dht11[10]<<5)+ (dht11[11]<<4)+ (dht11[12]<<3)+ (dht11[13]<<2)+ (dht11[14]<<1)+ dht11[15];
-  //dht11_val[2] = (dht11[16]<<7) + (dht11[17]<<6)+ (dht11[18]<<5)+ (dht11[19]<<4)+ (dht11[20]<<3)+ (dht11[21]<<2)+ (dht11[22]<<1)+ dht11[23];
-  //dht11_val[3] = (dht11[24]<<7) + (dht11[25]<<6)+ (dht11[26]<<5)+ (dht11[27]<<4)+ (dht11[28]<<3)+ (dht11[29]<<2)+ (dht11[30]<<1)+ dht11[31];
-  //dht11_val[4] = (dht11[32]<<7) + (dht11[33]<<6)+ (dht11[34]<<5)+ (dht11[35]<<4)+ (dht11[36]<<3)+ (dht11[37]<<2)+ (dht11[38]<<1)+ dht11[39];
- 
   if(dht11_val[4]==((dht11_val[0]+dht11_val[1]+dht11_val[2]+dht11_val[3])& 0xFF)) 
   {  
     farenheit=dht11_val[2]*9./5.+32;  
-    printf("Humidity = %d.%d %% Temperature = %d.%d *C (%.1f *F)\n",dht11_val[0],dht11_val[1],dht11_val[2],dht11_val[3],farenheit);  
+    //printf("Humidity = %d.%d %% Temperature = %d.%d *C (%.1f *F)\n",dht11_val[0],dht11_val[1],dht11_val[2],dht11_val[3],farenheit); 
+    Humidity    = dht11_val[0];
+    Temperature = dht11_val[2];
     return 1;
   }  
   else  
@@ -75,17 +186,4 @@ int dht11_read_val()
     //printf("Invalid Data!!\n"); 
     return 0;
   }
-}  
-  
-int main(void)  
-{  
-  printf("Interfacing Temperature and Humidity Sensor (DHT11) With Raspberry Pi\n");  
-  if(wiringPiSetup()==-1)  
-    exit(1);  
-  while(1)  
-  {  
-     dht11_read_val();  
-     delay(3000);  
-  }  
-  return 0; 
 }
