@@ -36,7 +36,8 @@ int main(void)
     int Slant_Flag = 0;
     
     init(); 
-    
+    LED(2);
+    while(1);
     while(1)
     {
       delay(1000);
@@ -49,17 +50,17 @@ int main(void)
         }
       }
       
-      if(Temperature <= 25)
+      if(dht11_val[2] <= 25)
       {
         LED(1);
         Fan(0);
       }
-      else if(Temperature <= 30)
+      else if(dht11_val[2] <= 30)
       {
         LED(2);
         Fan(1);  
       }
-      else if(Temperature > 30)
+      else if(dht11_val[2] > 30)
       {
         LED(3);
         Fan(1);  
@@ -235,8 +236,8 @@ int dht11_read_val(int Humidity,int Temperature)
   // verify cheksum and print the verified data 
   if(dht11_val[4]==((dht11_val[0]+dht11_val[1]+dht11_val[2]+dht11_val[3])& 0xFF)) 
   {  
-    Humidity    = dht11_val[0];
-    Temperature = dht11_val[2];
+   // Humidity    = dht11_val[0];
+  //  Temperature = dht11_val[2];
     return 1;
   }  
   else  
