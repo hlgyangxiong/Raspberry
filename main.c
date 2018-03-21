@@ -23,7 +23,7 @@ void init(void);
 void LED(int number);
 void Fan(int number);
 void Bell();
-int dht11_read_val();
+int dht11_read_val(int &Humidity,int &Temperature) 
 
 
 
@@ -39,7 +39,7 @@ int main(void)
 
     while(1)
     {
-      if(dht11_read_val())
+      if(dht11_read_val(Humidity,Temperature))
       {
         printf("Humidity = %d.%d %% Temperature = %d.%d *C \n",Humidity,dht11_val[1],Temperature,dht11_val[3]);
       }   
@@ -198,7 +198,7 @@ void Bell()
     }
 }
 
-int dht11_read_val()  
+int dht11_read_val(int &Humidity,int &Temperature)  
 {  
   int counter=0;  
   uint8_t i;   
