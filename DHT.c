@@ -45,11 +45,12 @@ int dht11_read_val()
     }
     if(counter < 35){
       dht11_val[i/8] <<= 1; 
-      //dht11[i] = 0;  
+      dht11[i] = 0;  
     }
     else{
       dht11_val[i/8] |= 1;
-      //dht11[i] = 1;
+      dht11_val[i/8] <<= 1;
+      dht11[i] = 1;
     } 
   }
   
