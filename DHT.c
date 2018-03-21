@@ -44,11 +44,11 @@ int dht11_read_val()
       }   
     }
     if(counter < 35){
-      dht11_val[i/8] = dht11_val[i/8] &( 0 << (7-i%8)); 
+      dht11_val[i/8] = dht11_val[i/8] + ( 0 << (7-i%8)); 
       dht11[i] = 0;  
     }
     else{
-      dht11_val[i/8] = dht11_val[i/8] &( 1 << (7-i%8));
+      dht11_val[i/8] = dht11_val[i/8] + ( 1 << (7-i%8));
       dht11[i] = 1;
     } 
   }
