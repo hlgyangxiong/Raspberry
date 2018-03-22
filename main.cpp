@@ -39,7 +39,9 @@ int main(void)
     char buf[100] = "";
     
     init();
-
+    while(1);
+    
+    
     while(1)
     {
       delay(3000);
