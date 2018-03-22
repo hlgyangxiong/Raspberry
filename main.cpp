@@ -7,13 +7,13 @@
 #define DHT11_MAX_TIME 40  
 #define DHT11PIN 7 
 
-#define LEDG1	 23
-#define LEDY1	 24
-#define LEDR1	 25	
+#define LEDG2	 23
+#define LEDY2	 24
+#define LEDR2	 25	
 
-#define LEDG2	 27
-#define LEDY2	 28
-#define LEDR2	 29
+#define LEDG1	 27
+#define LEDY1	 28
+#define LEDR1	 29
 
 #define Slant	 26
 #define HC_SR501 1		
