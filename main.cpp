@@ -132,7 +132,7 @@ void init(void)
     
     LED(1);
     LED(4);
-    Fan(0);
+    Fan(1);
     digitalWrite(0,HIGH);
 }
 void LED(int number)
